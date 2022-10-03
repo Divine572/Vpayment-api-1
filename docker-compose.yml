@@ -1,17 +1,10 @@
 version: '3'
 services:
-  postgres:
-    container_name: vpayment
-    image: postgres:latest
+  mongo:
+    image: mongo:4.4.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_DATABASE: ${MONGO_DATABASE}
     ports:
-      - '4568:4568'
-    volumes:
-      - /data/postgres:/data/postgres
-    env_file:
-      - docker.env
-    networks:
-      - postgres
-
-networks:
-  postgres:
-    driver: bridge
+      - '27017:27017'
