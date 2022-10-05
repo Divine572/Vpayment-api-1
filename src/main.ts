@@ -4,12 +4,14 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 
+const PORT = parseInt(process.env.SERVER_PORT, 10) || 7000
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: '*',
     credentials: true,
-  });
+  }); 
   const port = app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -17,6 +19,6 @@ async function bootstrap() {
   );
   app.use(cookieParser());
   app.setGlobalPrefix('v1/api');
-  await app.listen(7000);
+  await app.listen(PORT);
 }
 bootstrap();

@@ -11,7 +11,7 @@ const URL = 'https://topups-sandbox.reloadly.com/topups';
 @Injectable()
 export class AirtimeService {
   constructor(
-    @InjectModel(Airtime.name) private airtimeModel: Model<AirtimeDocument>,
+    // @InjectModel(Airtime.name) private airtimeModel: Model<AirtimeDocument>,
     private configService: ConfigService,
   ) {}
 
@@ -49,9 +49,9 @@ export class AirtimeService {
         )}`,
       },
       data: {
-        operatorId: 1100,
+        // operatorId: 1100,
         amount: 832,
-        useLocalAmount: false,
+        useLocalAmount: true,
         customIdentifier: 'airtime-top-up',
         recipientEmail: 'jeanb@reloadly.com',
         recipientPhone: {

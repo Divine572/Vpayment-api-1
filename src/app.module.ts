@@ -7,32 +7,14 @@ import { AppService } from './app.service';
 import * as Joi from 'joi';
 import { CardsModule } from './cards/cards.module';
 import { AirtimeModule } from './airtime/airtime.module';
+import mongodbConfig from './shared/config/mongodb.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        MONGO_USERNAME: Joi.string().required(),
-        MONGO_PASSWORD: Joi.string().required(),
-        MONGO_DATABASE: Joi.string().required(),
-        MONGO_HOST: Joi.string().required(),
-      }),
+      load: [mongodbConfig],
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const username = configService.get('MONGO_USERNAME');
-        const password = configService.get('MONGO_PASSWORD');
-        const database = configService.get('MONGO_DATABASE');
-        const host = configService.get('MONGO_HOST');
-
-        return {
-          uri: `mongodb://${username}:${password}@${host}`,
-          dbName: database,
-        };
-      },
-    }),
+    MongooseModule.forRoot('mongodb://localhost:27017/vpayment'),
     CardsModule,
     AirtimeModule,
   ],
