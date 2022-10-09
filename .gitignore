@@ -1,7 +1,7 @@
 .env
 docker.env
 
-
+/database
 # compiled output
 /dist
 /node_modules
