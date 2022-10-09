@@ -24,3 +24,6 @@ import { MongooseModule } from '@nestjs/mongoose';
   providers: [AppService],
 })
 export class AppModule {}
+
+//mongodb+srv://divine:$xzZeimPmCzW3sWZr@cluster0.mycdq4k.mongodb.net/?retryWrites=true&w=majority
+// docker run --name mongo -p 27017:27017 -d mongo:latest
