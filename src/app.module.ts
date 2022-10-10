@@ -4,7 +4,7 @@ import { AirtimeModule } from './airtime/airtime.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CardsModule } from './cards/cards.module';
-import { Module } from '@nestjs/common';
+import { INestApplication, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
@@ -27,7 +27,20 @@ import { MongooseModule } from '@nestjs/mongoose';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  static port: number | string;
+
+  constructor(private readonly configService: ConfigService) {
+    AppModule.port = this.configService.get('SERVER_PORT');
+  }
+
+  static getBaseUrl(app: INestApplication): string {
+    let baseUrl = app.getHttpServer().address().address
+    if(baseUrl === '0.0.0.0' || baseUrl === '::') {
+      return baseUrl = 'localhost';
+    }
+  }
+}
 
 //mongodb+srv://divine:$xzZeimPmCzW3sWZr@cluster0.mycdq4k.mongodb.net/?retryWrites=true&w=majority
 // docker run --name mongo -p 27017:27017 -d mongo:latest
