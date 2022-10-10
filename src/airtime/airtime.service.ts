@@ -6,7 +6,8 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { fetch } from 'node-fetch';
 
-const URL = 'https://topups-sandbox.reloadly.com/topups';
+const TEST_URL = 'https://topups-sandbox.reloadly.com/topups';
+const URL = 'https://topups.reloadly.com/topups';
 
 @Injectable()
 export class AirtimeService {
@@ -15,33 +16,10 @@ export class AirtimeService {
     private configService: ConfigService,
   ) {}
 
-  async getToken() {
-    try {
-      const response = await axios({
-        method: 'post',
-        url: 'https://auth.reloadly.com/oauth/token',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          client_id: this.configService.get('RELOADLY_TEST_API_CLIENT_ID'),
-          client_secret: this.configService.get(
-            'RELOADLY_TEST_API_CLIENT_SECRET',
-          ),
-          grant_type: 'client_credentials',
-          audience: 'https://topups.reloadly.com',
-        },
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   async buyAirtime() {
     const response = await axios({
       method: 'post',
-      url: URL,
+      url: TEST_URL,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.configService.get(

@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { CardsModule } from './cards/cards.module';
 import { INestApplication, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AccountHolersModule } from './account-holers/account-holers.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     CardsModule,
     AirtimeModule,
+    AccountHolersModule,
   ],
 
   controllers: [AppController],
@@ -35,9 +37,9 @@ export class AppModule {
   }
 
   static getBaseUrl(app: INestApplication): string {
-    let baseUrl = app.getHttpServer().address().address
-    if(baseUrl === '0.0.0.0' || baseUrl === '::') {
-      return baseUrl = 'localhost';
+    let baseUrl = app.getHttpServer().address().address;
+    if (baseUrl === '0.0.0.0' || baseUrl === '::') {
+      return (baseUrl = 'localhost');
     }
   }
 }

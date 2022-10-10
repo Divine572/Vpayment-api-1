@@ -8,6 +8,18 @@ export type AirtimeDocument = Airtime & Document;
 export class Airtime {
   @Transform(({ value }) => value.toString())
   _id: string;
+
+  @Prop()
+  amount: number;
+
+  @Prop()
+  operatorId: number;
+
+  @Prop()
+  recipientPhone: number;
+
+  @Prop({ default: true })
+  useLocalAmount: boolean;
 }
 
 export const AirtimeSchema = SchemaFactory.createForClass(Airtime);
