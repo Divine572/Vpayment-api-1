@@ -1,16 +1,50 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { CreateCardDto, FundCardDto } from './card.dto';
+import { CardsService } from './cards.service';
 
 @Controller('cards')
 export class CardsController {
-  @Post('/create_Vcard')
-  async create_Vcard() {}
+  constructor(private cardService: CardsService) {}
 
-  @Post('/fund_Vcard')
-  async fund_Vcard() {}
+  @Post()
+  create(@Body() dto: CreateCardDto) {
+    return this.cardService.createVirtualCard(dto);
+  }
 
-  @Get('/list_Vcard')
-  async list_Vcard() {}
+  @Post()
+  fundCard(@Body() dto: FundCardDto) {
+    return this.cardService.fundVirtualCard(dto);
+  }
 
-  @Post('/pay')
-  async pay_Vcard() {}
+  @Get(':id')
+  fetchCardTransactions(
+    @Param('id')
+    @Query()
+    dto: {
+      id: string;
+      page: number;
+      from: Date;
+      to: Date;
+    },
+  ) {
+    return this.cardService.fetchCardTransactions(dto);
+  }
+
+  @Get(':id')
+  fetchCard(@Param('id') id: string) {
+    return this.cardService.fetchCardDetails(id);
+  }
+
+  @Delete(':id')
+  deleteCard(@Param('id') id: string) {
+    return this.cardService.deleteVirtualCard(id);
+  }
 }

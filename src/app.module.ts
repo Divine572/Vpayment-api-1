@@ -1,12 +1,12 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { AirtimeModule } from './airtime/airtime.module';
+import { BillsModule } from './airtime/bills.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CardsModule } from './cards/cards.module';
 import { INestApplication, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AccountHolersModule } from './account-holers/account-holers.module';
+import { CardsModule } from './cards/cards.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -21,9 +21,9 @@ import { AccountHolersModule } from './account-holers/account-holers.module';
       }),
       inject: [ConfigService],
     }),
+    AccountModule,
     CardsModule,
-    AirtimeModule,
-    AccountHolersModule,
+    BillsModule,
   ],
 
   controllers: [AppController],

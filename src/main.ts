@@ -1,7 +1,8 @@
 import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
+import { setupSwagger } from './utils/swagger';
+import helmet from 'helmet';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
@@ -13,13 +14,16 @@ async function bootstrap() {
     origin: '*',
     credentials: true,
   });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
     }),
   );
+
+  setupSwagger(app);
   app.use(cookieParser());
-  // app.use(helmet());
+  app.use(helmet());
   app.setGlobalPrefix('v1/api');
   await app.listen(AppModule.port);
 

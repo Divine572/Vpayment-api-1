@@ -1,12 +1,12 @@
 import { Expose } from 'class-transformer';
 
-export class AirtimeDto {
+export class PayBillsDto {
   @Expose()
   amount: number;
 
   @Expose()
-  operatorId: number;
+  billerId: number;
 
   @Expose()
-  recipientPhone: number;
+  subscribersAccountNumber: number;
 }
